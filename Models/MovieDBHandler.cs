@@ -75,5 +75,24 @@ namespace MvcMovie.Models
 
 
         }
+        public bool ActualizaPelicula(MovieModel moviemodel)
+        {
+            Connection();
+            SqlCommand cmd = new SqlCommand("PELICULAMOD", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Par_PeliculaID", moviemodel.PeliculaID);
+            cmd.Parameters.AddWithValue("@Par_Titulo", moviemodel.Titulo);
+            cmd.Parameters.AddWithValue("@Par_FechaLanzamiento", moviemodel.FechaLanzamiento);
+            cmd.Parameters.AddWithValue("@Par_Genero", moviemodel.Genero);
+            cmd.Parameters.AddWithValue("@Par_Precio", moviemodel.Precio);
+
+            con.Open();
+            int i = cmd.ExecuteNonQuery();
+
+            if (i >= 1)
+                return true;
+            else
+                return false;
+        }
     }
 }

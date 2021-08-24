@@ -72,16 +72,20 @@ namespace MvcMovie.Controllers
         // GET: MovieController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            MovieDBHandler movieDB = new MovieDBHandler();
+            return View(movieDB.ListaPeliculas().Find(movieDB => movieDB.PeliculaID == id));
         }
 
         // POST: MovieController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, MovieModel moviemodel)
         {
             try
             {
+                MovieDBHandler movieDB = new MovieDBHandler();
+                movieDB.ActualizaPelicula(moviemodel);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
